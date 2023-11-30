@@ -15,18 +15,19 @@ void substituirCaractere(char *string) {
 int lerArquivo() {
     char *result;
     char linha[101];
-    FILE *arquivo = fopen("teste.txt", "rt");
+    FILE *arquivo = fopen("tabela.txt", "rt");
     char *pedaco;
     int i;
 
     i = 1;
+    // Não sei para que serve a função feof()
     while (!feof(arquivo)) {
         result = fgets(linha, 100, arquivo);
         if (result) {
-            // substituirCaractere(linha);
-            // printf("Linha %d:", i);
+            // Divide a string no ';'
             pedaco = strtok(linha, ";");
 
+            // Enquanto existir string vai mostrar um pedaço da string no console
             while(pedaco != NULL) {
                 if (pedaco[strlen(pedaco)-1] == '\n') {
                     pedaco[strlen(pedaco)-1] = '\0';
@@ -36,8 +37,6 @@ int lerArquivo() {
                 pedaco = strtok(NULL, ";");
             }
             printf("\n");
-            // Use o especificador de largura para alinhar as colunas
-            // printf("%-12s%-12s%-12s\n", linha, "", "");
 
             i++;
         }

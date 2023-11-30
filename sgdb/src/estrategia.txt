@@ -1,0 +1,22 @@
+1. Criar uma tabela\n2. Listar todas as tabelas\n3. Criar uma nova linha\n4. 
+Listar todos os dados\n5. Pesquisar valor\n6. Apagar uma linha\n7. Apagar uma tabela
+
+
+1. Opções de Criação 2. Oções de Leitura 3. Opções de Inserção 4. Opções de Pesquisa 5. Opções de Remoção
+1.1 Criar tabela
+
+2.1 Listar tabelas
+2.2 Ler tabela
+2.3 Ler coluna de tabela
+2.4 Ler linha de tabela
+
+3.1 Inserir nova linha
+3.2 Inserir nova coluna
+
+4.1 Pesquisar Valor
+
+5.1 Remover linha
+5.2 Remover coluna
+5.3 Remover tabela
+
+6. Sair
