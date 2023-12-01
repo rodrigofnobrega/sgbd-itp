@@ -34,10 +34,8 @@ char* processarString(char *entrada) {
     return novaString;
 }
 
-
 int lerLinhas(char ***linhas, char ***colunas, int quantidade_coluna) {
     char aux_valor_linha[TAMANHO_MAXIMO_STRING];
-    int indice_coluna = 0;
     int quantidade_valores_por_linha = 0;
     int quantidade_linhas = 0;
 
@@ -76,10 +74,6 @@ int lerLinhas(char ***linhas, char ***colunas, int quantidade_coluna) {
                 quantidade_linhas++;
             }
 
-            if (indice_coluna == quantidade_coluna) {
-                indice_coluna = 0;
-            }
-            
             quantidade_valores_por_linha++;
 
             *linhas = (char **)realloc(*linhas, sizeof(char *) * (quantidade_valores_por_linha + 1));
