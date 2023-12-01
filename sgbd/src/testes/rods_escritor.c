@@ -5,45 +5,85 @@
 
 #define TAMANHO_MAXIMO_STRING 50
 
-int lerLinhas(char ***linhas, int quantidade_coluna) {
+char* processarString(char *entrada) {
+    // Calcula o comprimento da string
+    size_t len = strlen(entrada);
+
+    // Aloca espaço para a nova string (comprimento - 1 para remover o ';')
+    char *novaString = (char*)malloc(len);
+
+    if (novaString == NULL) {
+        perror("Erro ao alocar memória");
+        exit(EXIT_FAILURE);
+    }
+
+    if (entrada[len - 1] == '\n') {
+        entrada[len - 1] = '\0';
+    }
+
+    // Copia os caracteres da entrada para a nova string, excluindo o ';'
+    for (size_t i = 0, j = 0; i < len; i++) {
+        if (entrada[i] != ';') {
+            novaString[j++] = entrada[i];
+        }
+    }
+
+    // Adiciona o caractere nulo ao final da nova string
+    novaString[len - 1] = '\0';
+
+    return novaString;
+}
+
+
+int lerLinhas(char ***linhas, char ***colunas, int quantidade_coluna) {
     char aux_valor_linha[TAMANHO_MAXIMO_STRING];
+    int indice_coluna = 0;
     int quantidade_valores_por_linha = 0;
     int quantidade_linhas = 0;
 
     *linhas = (char **)malloc(sizeof(char *) * 1);
 
-    printf("ADICIONE AS LINHAS: \n");
+    printf("CRIANDO LINHAS (digite 'fim' para parar) \n");
 
     for (int i = 0; ; i++) {
-        scanf(" %s", aux_valor_linha);
+        printf("Criando a linha %d\n", quantidade_linhas+1);
         
-        if (strcmp(aux_valor_linha, "fim") == 0) {
-            break;
+        for (int j = 0; j < quantidade_coluna; j++) {        
+            printf("Valor da coluna %2s: ", processarString((*colunas)[j]));
+            scanf(" %s", aux_valor_linha);
+            
+            if (strcmp(aux_valor_linha, "fim") == 0) {
+                return quantidade_linhas;
+            }
+
+            strcat(aux_valor_linha, ";");
+
+            (*linhas)[quantidade_valores_por_linha] = (char *)malloc(strlen(aux_valor_linha) * sizeof(char));
+
+            strcpy((*linhas)[quantidade_valores_por_linha], aux_valor_linha);
+
+            // Substituindo caso exista \n no final da string por \0
+            if ((*linhas)[quantidade_valores_por_linha][strlen(aux_valor_linha) - 1] == '\n') {
+                (*linhas)[quantidade_valores_por_linha][strlen(aux_valor_linha) - 1] = '\0';
+            }
+
+            // A condição está verificando se a quantidade de elementos digitados é igual a quantidade de colunas
+            // se for igual vai adicionar uma quebra de linha e pular para a próxima linha
+            if ((quantidade_valores_por_linha+1) % quantidade_coluna == 0) {
+                (*linhas)[quantidade_valores_por_linha] = (char *)realloc((*linhas)[quantidade_valores_por_linha], (strlen((*linhas)[quantidade_valores_por_linha]) + 2) * sizeof(char));
+                strcat((*linhas)[quantidade_valores_por_linha], "\n");
+            
+                quantidade_linhas++;
+            }
+
+            if (indice_coluna == quantidade_coluna) {
+                indice_coluna = 0;
+            }
+            
+            quantidade_valores_por_linha++;
+
+            *linhas = (char **)realloc(*linhas, sizeof(char *) * (quantidade_valores_por_linha + 1));
         }
-
-        strcat(aux_valor_linha, ";");
-
-        (*linhas)[i] = (char *)malloc(strlen(aux_valor_linha) * sizeof(char));
-
-        strcpy((*linhas)[i], aux_valor_linha);
-
-        // Substituindo caso exista \n no final da string por \0
-        if ((*linhas)[i][strlen(aux_valor_linha) - 1] == '\n') {
-            (*linhas)[i][strlen(aux_valor_linha) - 1] = '\0';
-        }
-
-        // A condição está verificando se a quantidade de elementos digitados é igual a quantidade de colunas
-        // se for igual vai adicionar uma quebra de linha e pular para a próxima linha
-        if ((i+1) % quantidade_coluna == 0) {
-            (*linhas)[i] = (char *)realloc((*linhas)[i], (strlen((*linhas)[i]) + 2) * sizeof(char));
-            strcat((*linhas)[i], "\n");
-        
-            quantidade_linhas++;
-        }
-
-        quantidade_valores_por_linha++;
-
-        *linhas = (char **)realloc(*linhas, sizeof(char *) * (quantidade_valores_por_linha + 1));
     }
 
     return quantidade_linhas;
@@ -55,10 +95,11 @@ int lerColunas(char ***nome_colunas) {
 
     *nome_colunas = (char **)malloc(sizeof(char *) * 1);
     
-    printf("ADICIONE AS COLUNAS (digite 'fim' para parar): \n");
+    printf("CRIANDO COLUNAS (digite 'fim' para parar) \n");
 
-    printf("Informe o nome da coluna para ser a chave primária: ");
+    printf("Informe o nome da coluna para ser a chave primária\n");
     for (int i = 0; ; i++) {
+        printf("Nome da coluna %2d: ", i+1);
         scanf(" %s", aux_nome_coluna);
 
         if (strcmp(aux_nome_coluna, "fim") == 0) {
@@ -120,7 +161,7 @@ void criarTabela() {
         fprintf(arquivo, "%s", colunas[i]);
     }
 
-    quantidade_linhas = lerLinhas(&linhas, quantidade_colunas);
+    quantidade_linhas = lerLinhas(&linhas, &colunas, quantidade_colunas);
 
     // Salvando no arquivo o valor das colunas
     for (int i = 0; linhas[i] != NULL; i++)
@@ -144,6 +185,7 @@ int main() {
     * Tipo de cada coluna
      */
     criarTabela(); 
+
 
     /* Código para adicionar novas linhas em uma tabela já existente 
     
