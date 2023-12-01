@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #define TAMANHO_MAXIMO_STRING 50
 
@@ -100,10 +101,15 @@ void criarTabela() {
 
     int quantidade_colunas = 0;
     int quantidade_linhas = 0;
-    
+
+    printf("Informe o nome da tabela: ");
+    scanf(" %s", &nome_tabela);
+
+    strcat(nome_tabela, ".txt");
+
     // O nome do arquivo hard-coded pode ser substituida
     // pela concatenação da variável 'nome_tabela' + .txt
-    FILE *arquivo = fopen("tabela.txt", "w");
+    FILE *arquivo = fopen(nome_tabela, "w");
 
     quantidade_colunas = lerColunas(&colunas);
 
