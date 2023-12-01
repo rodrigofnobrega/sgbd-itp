@@ -55,8 +55,9 @@ int lerColunas(char ***nome_colunas) {
 
     *nome_colunas = (char **)malloc(sizeof(char *) * 1);
     
-    printf("ADICIONE AS COLUNAS: \n");
+    printf("ADICIONE AS COLUNAS (digite 'fim' para parar): \n");
 
+    printf("Informe o nome da coluna para ser a chave primária: ");
     for (int i = 0; ; i++) {
         scanf(" %s", aux_nome_coluna);
 
