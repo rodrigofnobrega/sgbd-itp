@@ -11,8 +11,8 @@ typedef union coluna{
     ColunaTipos coluna_tipo;
     char *coluna_nome;
 
-    int **celulas_int;
-    float **celulas_float;
+    int *celulas_int;
+    float *celulas_float;
     char **celulas_string;
 } Coluna;
 

@@ -129,7 +129,7 @@ int lerColunas(char ***nome_colunas) {
 
 void criarTabela() {
     // nome_tabela ainda não foi usada mas será necessária no futuro
-    char nome_tabela[100];
+    char nome_tabela[50];
     // Vetor para armazenar todas as colunas informadas pelo usuário
     char **colunas;
     // Vetor que armazena o valor de cada coluna, talvez seja melhor renomea-la
@@ -170,26 +170,3 @@ void criarTabela() {
 
 // Acredito que seja necessário renomear as variáveis e funções para nomes melhores,
 // que deixe mais explícito as suas funcionalidades
-
-int main() {
-    // Função para criar uma tabela
-    /* Ainda falta implementar
-    * Chave primária
-    * Nome da tabela
-    * Tipo de cada coluna
-     */
-    criarTabela(); 
-
-
-    /* Código para adicionar novas linhas em uma tabela já existente 
-    
-    FILE *arquivo = fopen("tabela.txt", "a");
-    char **linhas;
-    lerLinhas(&linhas, 3);
-    for (int i = 0; linhas[i] != NULL; i++)
-    {
-        fprintf(arquivo, "%s", linhas[i]); 
-    }
- */
-    return 0;
-}

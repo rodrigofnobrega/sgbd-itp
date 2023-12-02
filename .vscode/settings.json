@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "create.h": "c",
+        "stdio.h": "c"
+    }
+}
