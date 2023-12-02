@@ -129,7 +129,6 @@ int lerColunas(char ***nome_colunas) {
 }
 
 void criarTabela() {
-    printf("ADSDASD");
     // nome_tabela ainda não foi usada mas será necessária no futuro
     char nome_tabela[50];
     // Vetor para armazenar todas as colunas informadas pelo usuário
