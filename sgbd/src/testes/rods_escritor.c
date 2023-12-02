@@ -129,7 +129,7 @@ int lerColunas(char ***nome_colunas) {
 
 void criarTabela() {
     // nome_tabela ainda não foi usada mas será necessária no futuro
-    char nome_tabela[50];
+    char nome_tabela[100];
     // Vetor para armazenar todas as colunas informadas pelo usuário
     char **colunas;
     // Vetor que armazena o valor de cada coluna, talvez seja melhor renomea-la
