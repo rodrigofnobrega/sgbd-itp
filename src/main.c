@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "../includes/criar_tabela.h"
 #include "../includes/criar_linha.h"
+#include "../includes/apagar_tabela.h"
 #include "../includes/listar_tabelas.h"
 
 int main(){
@@ -29,6 +30,11 @@ int main(){
             case 6:
                 break;
             case 7:
+                if (apagar_tabela() == 0) {
+                    printf("Tabela não encontrada\n");
+                } else if (apagar_tabela() == -1) {
+                    printf("Erro ao apagar tabela\n");
+                }
                 break;
             case 0:
                 printf("Saindo...");
