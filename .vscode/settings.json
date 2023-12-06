@@ -1,6 +1,11 @@
 {
     "files.associations": {
         "create.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "criar_tabela.h": "c",
+        "stdlib.h": "c",
+        "utils.h": "c",
+        "string.h": "c",
+        "criar_linha.h": "c"
     }
 }

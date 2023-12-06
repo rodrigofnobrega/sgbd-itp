@@ -4,9 +4,9 @@
 #include <stdlib.h>
 
 #define TITULO "TABELAS EXISTENTES"
-#define DB_FILES_PATH "../../../database/db_files"
+#define DB_FILES_PATH "database/"
 
-void mostrar_linhas(int tamformatacao_tabela) {
+void exibir_linhas(int tamformatacao_tabela) {
     printf("+");
     for (int i = 0; i < tamformatacao_tabela + 2; i++) {
         printf("-");
@@ -14,11 +14,10 @@ void mostrar_linhas(int tamformatacao_tabela) {
     printf("+\n");
 }
 
-void formatar_tabelas(char **nomes_tabelas, int tam_formatacao_tabela, int qtd_tabelas) {
-    const char *titulo = "TABELAS EXISTENTES";
+void organizar_tabelas(char **nomes_tabelas, int tam_formatacao_tabela, int qtd_tabelas) {
     int espacos_em_branco = (tam_formatacao_tabela - strlen(TITULO));
 
-    mostrar_linhas(tam_formatacao_tabela);
+    exibir_linhas(tam_formatacao_tabela);
 
     // Calcular a quantidade de espaços em branco para centralizar o texto
     // e mostrar linhas com o texto centralizado
@@ -32,17 +31,17 @@ void formatar_tabelas(char **nomes_tabelas, int tam_formatacao_tabela, int qtd_t
         printf("| %*s%s%*s |\n", espacos_em_branco, "", TITULO, espacos_em_branco+1, "");
     }
 
-    mostrar_linhas(tam_formatacao_tabela);
+    exibir_linhas(tam_formatacao_tabela);
 
     // Mostrar as linhas com os nomes das tabelas
     for (int i = 0; i < qtd_tabelas; i++) {
         printf("| %-*s |\n", tam_formatacao_tabela, nomes_tabelas[i]);
     }
 
-    mostrar_linhas(tam_formatacao_tabela);
+    exibir_linhas(tam_formatacao_tabela);
 }
 
-int mostrar_tabela() {
+int mostrar_tabelas() {
     char **qtd_tabelas_existentes = NULL;
     char *nome_tabela;
     int tam_formatacao_tabela = strlen(TITULO);
@@ -71,17 +70,11 @@ int mostrar_tabela() {
         }
     }
 
-    formatar_tabelas(qtd_tabelas_existentes, tam_formatacao_tabela, qtd_tabelas);
+    organizar_tabelas(qtd_tabelas_existentes, tam_formatacao_tabela, qtd_tabelas);
 
     for (int i = 0; i < qtd_tabelas; i++) {
         free(qtd_tabelas_existentes[i]);
     }
 
     free(qtd_tabelas_existentes);
-}
-
-int main() {
-    mostrar_tabela();
-
-    return 0;
 }

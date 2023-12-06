@@ -1,166 +1,132 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
-#include "..\..\includes\create.h"
+#include <stdlib.h>
+#include <errno.h>
+#include "..\..\includes\utils.h"
 
-#define TAMANHO_MAXIMO_STRING 50
-
-char* processarString(char *entrada) {
-    // Calcula o comprimento da string
-    size_t len = strlen(entrada);
-
-    // Aloca espaço para a nova string (comprimento - 1 para remover o ';')
-    char *novaString = (char*)malloc(len);
-
-    if (novaString == NULL) {
-        perror("Erro ao alocar memória");
-        exit(EXIT_FAILURE);
+void definir_tipo(int enum_type, Tabela *banco_de_dados, int aux){
+    switch(enum_type){
+        case INT:
+            banco_de_dados->colunas[aux].coluna_tipo = INT;
+            break;
+        case FLOAT:
+            banco_de_dados->colunas[aux].coluna_tipo = FLOAT;
+            break;
+        case DOUBLE:
+            banco_de_dados->colunas[aux].coluna_tipo = DOUBLE;
+            break;
+        case CHAR:
+            banco_de_dados->colunas[aux].coluna_tipo = CHAR;
+            break;
+        case STRING:
+            banco_de_dados->colunas[aux].coluna_tipo = STRING;
+            break;
+        default:
+            printf("~Digite um valor válido\n");
     }
-
-    if (entrada[len - 1] == '\n') {
-        entrada[len - 1] = '\0';
-    }
-
-    // Copia os caracteres da entrada para a nova string, excluindo o ';'
-    for (size_t i = 0, j = 0; i < len; i++) {
-        if (entrada[i] != ';') {
-            novaString[j++] = entrada[i];
-        }
-    }
-
-    // Adiciona o caractere nulo ao final da nova string
-    novaString[len - 1] = '\0';
-
-    return novaString;
 }
 
-int lerLinhas(char ***linhas, char ***colunas, int quantidade_coluna) {
-    char aux_valor_linha[TAMANHO_MAXIMO_STRING];
-    int quantidade_valores_por_linha = 0;
-    int quantidade_linhas = 0;
+void salvar_arquivo(Tabela *banco_de_dados, int aux) {
 
-    *linhas = (char **)malloc(sizeof(char *) * 1);
-
-    printf("CRIANDO LINHAS (digite 'fim' para parar) \n");
-
-    for (int i = 0; ; i++) {
-        printf("Criando a linha %d\n", quantidade_linhas+1);
-        
-        for (int j = 0; j < quantidade_coluna; j++) {        
-            printf("Valor da coluna %2s: ", processarString((*colunas)[j]));
-            scanf(" %s", aux_valor_linha);
-            
-            if (strcmp(aux_valor_linha, "fim") == 0) {
-                return quantidade_linhas;
-            }
-
-            strcat(aux_valor_linha, ";");
-
-            (*linhas)[quantidade_valores_por_linha] = (char *)malloc(strlen(aux_valor_linha) * sizeof(char));
-
-            strcpy((*linhas)[quantidade_valores_por_linha], aux_valor_linha);
-
-            // Substituindo caso exista \n no final da string por \0
-            if ((*linhas)[quantidade_valores_por_linha][strlen(aux_valor_linha) - 1] == '\n') {
-                (*linhas)[quantidade_valores_por_linha][strlen(aux_valor_linha) - 1] = '\0';
-            }
-
-            // A condição está verificando se a quantidade de elementos digitados é igual a quantidade de colunas
-            // se for igual vai adicionar uma quebra de linha e pular para a próxima linha
-            if ((quantidade_valores_por_linha+1) % quantidade_coluna == 0) {
-                (*linhas)[quantidade_valores_por_linha] = (char *)realloc((*linhas)[quantidade_valores_por_linha], (strlen((*linhas)[quantidade_valores_por_linha]) + 2) * sizeof(char));
-                strcat((*linhas)[quantidade_valores_por_linha], "\n");
-            
-                quantidade_linhas++;
-            }
-
-            quantidade_valores_por_linha++;
-
-            *linhas = (char **)realloc(*linhas, sizeof(char *) * (quantidade_valores_por_linha + 1));
-        }
+    char nome[STRING_MAX_SIZE];
+    sprintf(nome, "database/%s.txt", banco_de_dados->tabela_nome);
+    FILE *arquivo;
+    arquivo = fopen(nome, "w");
+    if (arquivo == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return; 
+    }
+    for(int i = 0; i < aux; i++){
+        fprintf(arquivo, "%d;", banco_de_dados->colunas[i].coluna_tipo);
+    }
+    fprintf(arquivo, "\n");
+    for(int i = 0; i < aux; i++){
+        fprintf(arquivo, "%s;", banco_de_dados->colunas[i].coluna_nome);
     }
 
-    return quantidade_linhas;
+    fclose(arquivo);
 }
 
-int lerColunas(char ***nome_colunas) {
-    char aux_nome_coluna[TAMANHO_MAXIMO_STRING]; // Variável auxiliar para pegar o tamanho de string e alocar a memória exata no vetor 'nome_colunas'
-    int quantidade_colunas = 0;
-
-    *nome_colunas = (char **)malloc(sizeof(char *) * 1);
+void criar_tabela() {
+    Tabela *banco_de_dados = (Tabela *)malloc(sizeof(Tabela));
+    size_t str_length;
     
-    printf("CRIANDO COLUNAS (digite 'fim' para parar) \n");
+    printf("$Digite o nome do banco de dados: ");
+    fgets(banco_de_dados->tabela_nome, STRING_MAX_SIZE, stdin);
+    str_length = strlen(banco_de_dados->tabela_nome);
+    if(banco_de_dados->tabela_nome[str_length-1] == '\n'){
+        banco_de_dados->tabela_nome[str_length-1] = '\0';
+    }
+    
+    int aux = 1;
+    banco_de_dados->colunas = (Coluna *)malloc(sizeof(Coluna) * 2 * aux);
+    
+    
+    char key_input[STRING_MAX_SIZE];
+    printf("$Nome da coluna de chave primária: ");
+    fgets(key_input, STRING_MAX_SIZE, stdin);
+    str_length = strlen(key_input);
+    if (key_input[str_length-1] == '\n') {
+        key_input[str_length-1] = '\0';
+    }
+    banco_de_dados->colunas[aux - 1].coluna_tipo = INT;
+    banco_de_dados->colunas[aux - 1].coluna_nome = (char *)malloc(sizeof(char) * (str_length + 1));
+    strcpy(banco_de_dados->colunas[aux - 1].coluna_nome, key_input);
 
-    printf("Informe o nome da coluna para ser a chave primária\n");
-    for (int i = 0; ; i++) {
-        printf("Nome da coluna %2d: ", i+1);
-        scanf(" %s", aux_nome_coluna);
+    do {
+        printf("$Nome da %dº coluna(digite 'fim' para finalizar): ", aux);
+        char input[STRING_MAX_SIZE];
+        fgets(input, STRING_MAX_SIZE, stdin);
 
-        if (strcmp(aux_nome_coluna, "fim") == 0) {
-            if (i > 0) {
-                // Alocar mais um byte de espaço para adicionar o \n à última coluna inserida 
-                (*nome_colunas)[i - 1] = (char *)realloc((*nome_colunas)[i - 1], (strlen((*nome_colunas)[i - 1]) + 2) * sizeof(char));
-                strcat((*nome_colunas)[i - 1], "\n");
-            }
+        str_length = strlen(input);
+        if (input[str_length - 1] == '\n') {
+            input[str_length - 1] = '\0';
+        }
 
+        if (strcmp(input, "fim") == 0) {
             break;
         }
 
-        strcat(aux_nome_coluna, ";");
+        banco_de_dados->colunas[aux].coluna_nome = (char *)malloc(sizeof(char) * (str_length + 1));
+        if (banco_de_dados->colunas[aux].coluna_nome == NULL) {
+            fprintf(stderr, "Memory allocation for coluna_nome failed\n");
+            exit(EXIT_FAILURE);
+        }
+        strcpy(banco_de_dados->colunas[aux].coluna_nome, input);
 
-        (*nome_colunas)[i] = (char *)malloc(strlen(aux_nome_coluna) * sizeof(char));
+        char tipo_entrada[STRING_MAX_SIZE];
+        printf("$Tipo da %dº coluna(INT, FLOAT, DOUBLE, CHAR, STR): ", aux);
 
-        strcpy((*nome_colunas)[i], aux_nome_coluna);
-
-        // Substituindo caso exista \n no final da string por \0
-        if ((*nome_colunas)[i][strlen(aux_nome_coluna) - 1] == '\n') {
-            (*nome_colunas)[i][strlen(aux_nome_coluna) - 1] = '\0';
+        if (fgets(tipo_entrada, sizeof(tipo_entrada), stdin) == NULL) {
+            fprintf(stderr, "Erro ao ler a entrada\n");
+            exit(EXIT_FAILURE);
         }
 
-        quantidade_colunas++;
+        str_length = strlen(tipo_entrada);
+        if (str_length > 0 && tipo_entrada[str_length - 1] == '\n') {
+        tipo_entrada[str_length - 1] = '\0';
+        }
 
-        // Alocando memória para o vetor conseguir adicionar mais uma coluna
-        // Talvez seja melhor alocar a memória depois de saber que vai existir mais uma coluna?
-        *nome_colunas = (char **)realloc(*nome_colunas, sizeof(char *) * (quantidade_colunas + 1));
+        int enum_type = (strcmp(tipo_entrada, "INT") == 0) ? 0 :
+                (strcmp(tipo_entrada, "FLOAT") == 0) ? 1 :
+                (strcmp(tipo_entrada, "DOUBLE") == 0) ? 2 :
+                (strcmp(tipo_entrada, "CHAR") == 0) ? 3 :
+                (strcmp(tipo_entrada, "STR") == 0) ? 4 : -1;
+
+        definir_tipo(enum_type, banco_de_dados, aux);  
+
+        aux++;
+        banco_de_dados->colunas = realloc(banco_de_dados->colunas, sizeof(Coluna) * (aux + 1));
+        if (banco_de_dados->colunas == NULL) {
+            fprintf(stderr, "Memory reallocation failed\n");
+            exit(EXIT_FAILURE);
+        }
+    } while (1);
+    salvar_arquivo(banco_de_dados, aux);
+    for (int i = 0; i < aux; i++) {
+        free(banco_de_dados->colunas[i].coluna_nome);
     }
-
-    return quantidade_colunas;
-}
-
-void criarTabela() {
-    printf("ADSDASD");
-    // nome_tabela ainda não foi usada mas será necessária no futuro
-    char nome_tabela[50];
-    // Vetor para armazenar todas as colunas informadas pelo usuário
-    char **colunas;
-    // Vetor que armazena o valor de cada coluna, talvez seja melhor renomea-la
-    char **linhas;
-
-    int quantidade_colunas = 0;
-    int quantidade_linhas = 0;
-
-    printf("Informe o nome da tabela: ");
-    scanf(" %s", &nome_tabela);
-
-    strcat(nome_tabela, ".txt");
-
-    // O nome do arquivo hard-coded pode ser substituida
-    // pela concatenação da variável 'nome_tabela' + .txt
-    FILE *arquivo = fopen(nome_tabela, "w");
-
-    quantidade_colunas = lerColunas(&colunas);
-
-    // Salvando no arquivo as colunas
-    for (int i = 0; colunas[i] != NULL; i++)
-    {
-        fprintf(arquivo, "%s", colunas[i]);
-    }
-
-    quantidade_linhas = lerLinhas(&linhas, &colunas, quantidade_colunas);
-
-    for (int i = 0; linhas[i] != NULL; i++)
-    {
-        fprintf(arquivo, "%s", linhas[i]); 
-    }
+    
+    free(banco_de_dados->colunas);
+    free(banco_de_dados);
 }

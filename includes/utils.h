@@ -1,13 +1,17 @@
 #ifndef UTILS_H
 #define UTILS_H
+#define STRING_MAX_SIZE 100
+#define MAX_TAMANHO_LINHA 100
 
-typedef enum tipos{
-    INTEIROS,
+typedef enum tipos {
+    INT,
     FLOAT,
+    DOUBLE,
+    CHAR,
     STRING
 } ColunaTipos;
 
-typedef union coluna{
+typedef struct coluna {
     ColunaTipos coluna_tipo;
     char *coluna_nome;
 
@@ -16,9 +20,17 @@ typedef union coluna{
     char **celulas_string;
 } Coluna;
 
-typedef struct tabela{
+typedef struct tabela {
     Coluna *colunas;
-    char *tabela_nome;
+    char tabela_nome[STRING_MAX_SIZE];
 } Tabela;
+
+typedef union coluna_dados{
+    int inteiro;
+    float flutuante;
+    double real;
+    char caracter;
+    char *string;
+} Dados;
 
 #endif
