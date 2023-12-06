@@ -52,3 +52,5 @@ Mkfile.old
 dkms.conf
 
 database/*.txt
+bin/*.bin
+bin/*.exe
