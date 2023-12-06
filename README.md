@@ -6,13 +6,13 @@ Caio Daniel Fonseca de Araújo
 
 ## To-Do
 
-- [ ] Criar uma tabela
-- [ ] Listar todas as tabelas
-- [ ] Criar uma nova linha na tabela
+- [x] Criar uma tabela
+- [x] Listar todas as tabelas
+- [x] Criar uma nova linha na tabela
 - [ ] Listar todos os dados de uma tabela
 - [ ] Pesquisar valor em uma tabela
 - [ ] Apagar uma tupla (registro ou linha) de uma tabela
-- [ ] Apagar uma tabela
+- [x] Apagar uma tabela
 - [ ] Criar Documentação (README.TXT)
 
 ## Convenções
