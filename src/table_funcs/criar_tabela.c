@@ -2,7 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
-#include "..\..\includes\utils.h"
+#include "../../includes/utils.h"
+#include "../../includes/utils/string_utils.h"
 
 void definir_tipo(int enum_type, Tabela *banco_de_dados, int aux){
     switch(enum_type){
@@ -77,8 +78,8 @@ void criar_tabela() {
         printf("$Nome da %dº coluna(digite 'fim' para finalizar): ", aux);
         char input[STRING_MAX_SIZE];
         fgets(input, STRING_MAX_SIZE, stdin);
-
         str_length = strlen(input);
+       
         if (input[str_length - 1] == '\n') {
             input[str_length - 1] = '\0';
         }
@@ -102,9 +103,11 @@ void criar_tabela() {
             exit(EXIT_FAILURE);
         }
 
+        upperString(tipo_entrada);
         str_length = strlen(tipo_entrada);
+        
         if (str_length > 0 && tipo_entrada[str_length - 1] == '\n') {
-        tipo_entrada[str_length - 1] = '\0';
+            tipo_entrada[str_length - 1] = '\0';
         }
 
         int enum_type = (strcmp(tipo_entrada, "INT") == 0) ? 0 :
