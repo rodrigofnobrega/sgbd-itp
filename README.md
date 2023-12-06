@@ -1,5 +1,8 @@
 # sgdb-itp
 Um programa de gerenciamento de banco de dados relacional feito na linguagem C.
+Dupla:
+Rodrigo Nóbrega Ferreira
+Caio Daniel Fonseca de Araújo
 
 ## To-Do
 
