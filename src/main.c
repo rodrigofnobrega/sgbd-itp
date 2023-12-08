@@ -14,7 +14,6 @@ int main(){
         switch(option){
             case 1:
                 criar_tabela();
-                printf("TABELA CRIADA.\n");
                 break;
             case 2:
                 criar_linha(); 
