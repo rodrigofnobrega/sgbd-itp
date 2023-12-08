@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 #define TITULO "TABELAS EXISTENTES"
-#define DB_FILES_PATH "database/"
+#define DB_FILES_PATH "../database/"
 
 void exibir_linhas(int tamformatacao_tabela) {
     printf("+");

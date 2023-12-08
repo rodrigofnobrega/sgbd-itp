@@ -2,8 +2,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <dirent.h>
 #include "../../includes/utils.h"
 #include "../../includes/utils/string_utils.h"
+#define DB_FILE_PATH "../database/"
 
 void definir_tipo(int enum_type, Tabela *banco_de_dados, int aux){
     switch(enum_type){
@@ -27,15 +29,15 @@ void definir_tipo(int enum_type, Tabela *banco_de_dados, int aux){
     }
 }
 
-void salvar_arquivo(Tabela *banco_de_dados, int aux) {
-
-    char nome[STRING_MAX_SIZE];
-    sprintf(nome, "database/%s.txt", banco_de_dados->tabela_nome);
+int salvar_arquivo(Tabela *banco_de_dados, int aux) {
+    char database_path[STRING_MAX_SIZE];
+    sprintf(database_path, "%s%s.txt", DB_FILE_PATH, banco_de_dados->tabela_nome);
+    
     FILE *arquivo;
-    arquivo = fopen(nome, "w");
+    arquivo = fopen(database_path, "w");
     if (arquivo == NULL) {
         perror("Erro ao abrir o arquivo");
-        return; 
+        return -1; 
     }
     for(int i = 0; i < aux; i++){
         fprintf(arquivo, "%d;", banco_de_dados->colunas[i].coluna_tipo);
@@ -46,6 +48,7 @@ void salvar_arquivo(Tabela *banco_de_dados, int aux) {
     }
 
     fclose(arquivo);
+    return 0;
 }
 
 void criar_tabela() {
@@ -53,12 +56,33 @@ void criar_tabela() {
     size_t str_length;
     
     printf("$Digite o nome do banco de dados: ");
+
     fgets(banco_de_dados->tabela_nome, STRING_MAX_SIZE, stdin);
     str_length = strlen(banco_de_dados->tabela_nome);
     if(banco_de_dados->tabela_nome[str_length-1] == '\n'){
         banco_de_dados->tabela_nome[str_length-1] = '\0';
     }
     
+    DIR *dir;
+    struct dirent *entrada;
+    int tabela_existe = 0;
+
+    dir = opendir(DB_FILE_PATH);
+    if(dir == NULL){
+        perror("Erro ao abrir o diretório.");
+        return -1;
+    }
+    
+    char database_filename[STRING_MAX_SIZE];
+    sprintf(database_filename, "%s.txt", banco_de_dados->tabela_nome);
+
+    while ((entrada = readdir(dir)) != NULL){
+        if(strcmp(entrada->d_name, database_filename) == 0){
+            printf("A tabela já existe, digite outro nome.\n");
+            return -1;
+        }
+    }
+
     int aux = 1;
     banco_de_dados->colunas = (Coluna *)malloc(sizeof(Coluna) * 2 * aux);
     
@@ -126,6 +150,7 @@ void criar_tabela() {
         }
     } while (1);
     salvar_arquivo(banco_de_dados, aux);
+    printf("TABELA CRIADA.\n");
     for (int i = 0; i < aux; i++) {
         free(banco_de_dados->colunas[i].coluna_nome);
     }

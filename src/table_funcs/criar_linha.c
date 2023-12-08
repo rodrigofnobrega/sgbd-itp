@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
-#include "..\..\includes\utils.h"
+#include "../../includes/utils.h"
 
 void mostrar_linhas(int *tam_colunas, int qtd_colunas) {
     printf("+");
@@ -107,7 +107,7 @@ void criar_linha() {
         banco_nome[string_length-1] = '\0';
     }
     char arquivo_nome[STRING_MAX_SIZE];
-    sprintf(arquivo_nome, "database/%s.txt", banco_nome);
+    sprintf(arquivo_nome, "../database/%s.txt", banco_nome);
 
     FILE *arquivo = fopen(arquivo_nome, "r");
     int tam_titulo = strlen("Coluna Nome");
