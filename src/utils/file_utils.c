@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "../../includes/utils/file_utills.h"
+#include "../../includes/utils/file_utils.h"
 #include "../../includes/utils.h"
 
 char *definir_caminho_tabela(const char *nome_tabela) {
