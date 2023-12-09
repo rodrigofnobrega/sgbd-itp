@@ -53,7 +53,7 @@ int main(){
                 }
                 break;
             case 0:
-                printf("Saindo...");
+                printf("Saindo...\n");
                 break;
             default:
                 printf("Erro! Digite uma opção válida.\n");
