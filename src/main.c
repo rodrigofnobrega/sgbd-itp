@@ -3,6 +3,7 @@
 #include "../includes/criar_linha.h"
 #include "../includes/apagar_tabela.h"
 #include "../includes/listar_tabelas.h"
+#include "../includes/apagar_linha.h"
 
 int main(){
     int option;
@@ -27,6 +28,22 @@ int main(){
             case 5:
                 break;
             case 6:
+                char nome_tabela[STRING_MAX_SIZE];
+                char chave_primaria[STRING_MAX_SIZE];
+
+                printf("Informe o nome da tabela: ");
+                fgets(nome_tabela, sizeof(nome_tabela), stdin);
+                remover_quebra_linha(nome_tabela);
+
+                printf("Informe a chave primária da linha: ");
+                fgets(chave_primaria, sizeof(chave_primaria), stdin);
+                remover_quebra_linha(chave_primaria);
+
+                if (remover_linha(nome_tabela, chave_primaria) == 1) {
+                    printf("Linha apagada com sucesso\n");
+                } else {
+                    printf("Linha não encontrada\n");
+                }
                 break;
             case 7:
                 if (apagar_tabela() == 0) {

@@ -5,4 +5,6 @@
 
 void upperString(char *string);
 
+void remover_quebra_linha(char *string);
+
 #endif 
