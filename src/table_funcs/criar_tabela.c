@@ -97,13 +97,14 @@ void criar_tabela() {
         printf("$Nome da %dº coluna(digite 'fim' para finalizar): ", aux);
         char input[STRING_MAX_SIZE];
         fgets(input, STRING_MAX_SIZE, stdin);
+        upper_string(input);
         str_length = strlen(input);
        
         if (input[str_length - 1] == '\n') {
             input[str_length - 1] = '\0';
         }
 
-        if (strcmp(input, "fim") == 0) {
+        if (strcmp(input, "FIM") == 0) {
             break;
         }
 
