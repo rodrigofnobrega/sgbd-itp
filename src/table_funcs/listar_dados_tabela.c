@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../../includes/utils.h"
 
 #define MAX_BUFFER_SIZE 100
 #define TITULO "DADOS DA TABELA"
-#define DB_PATH "../database/"
 
 int contarColunas(char *linha) {
     int numColunas = 0;

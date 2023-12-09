@@ -4,8 +4,6 @@
 #include "../../includes/apagar_tabela.h"
 #include "../../includes/utils.h"
 
-#define DB_FILES_PATH "../database/"
-
 int apagar_tabela() {
     DIR *dir;
     struct dirent *entrada;
@@ -13,7 +11,7 @@ int apagar_tabela() {
     char nome_tabela[STRING_MAX_SIZE];
     char path_tabela[STRING_MAX_SIZE];
 
-    dir = opendir(DB_FILES_PATH);
+    dir = opendir(DB_PATH);
     if (dir == NULL) {
         perror("Erro ao abrir o diretório.");
         return -1;
@@ -22,7 +20,7 @@ int apagar_tabela() {
     printf("Informe o nome da tabela: ");
     scanf("%[^\n]", nome_tabela);
     strcat(nome_tabela, ".txt");
-    sprintf(path_tabela, "%s%s", DB_FILES_PATH, nome_tabela);
+    sprintf(path_tabela, "%s%s", DB_PATH, nome_tabela);
 
     while ((entrada = readdir(dir)) != NULL) {
         if (strcmp(entrada->d_name, nome_tabela) == 0) {

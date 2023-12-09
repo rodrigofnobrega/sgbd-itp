@@ -5,8 +5,6 @@
 #include "../../includes/utils.h"
 #include "../../includes/apagar_linha.h"
 
-#define DB_PATH "../database/"
-
 char *definir_caminho_tabela(const char *nome_tabela) {
     char *caminho_tabela = malloc(strlen(DB_PATH) + strlen(nome_tabela) + 5);
 

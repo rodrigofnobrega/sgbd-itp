@@ -5,7 +5,6 @@
 #include <dirent.h>
 #include "../../includes/utils.h"
 #include "../../includes/utils/string_utils.h"
-#define DB_FILE_PATH "../database/"
 
 void definir_tipo(int enum_type, Tabela *banco_de_dados, int aux){
     switch(enum_type){
@@ -31,7 +30,7 @@ void definir_tipo(int enum_type, Tabela *banco_de_dados, int aux){
 
 int salvar_arquivo(Tabela *banco_de_dados, int aux) {
     char database_path[STRING_MAX_SIZE];
-    sprintf(database_path, "%s%s.txt", DB_FILE_PATH, banco_de_dados->tabela_nome);
+    sprintf(database_path, "%s%s.txt", DB_PATH, banco_de_dados->tabela_nome);
     
     FILE *arquivo;
     arquivo = fopen(database_path, "w");
@@ -67,7 +66,7 @@ void criar_tabela() {
     struct dirent *entrada;
     int tabela_existe = 0;
 
-    dir = opendir(DB_FILE_PATH);
+    dir = opendir(DB_PATH);
     if(dir == NULL){
         perror("Erro ao abrir o diretório.");
         return -1;
