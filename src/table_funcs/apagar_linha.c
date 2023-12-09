@@ -81,6 +81,7 @@ int remover_linha(const char *nome_tabela, const char *chave_primaria) {
     rename(caminho_tabela_temp, caminho_tabela_orig);
 
     free(caminho_tabela_orig);
+    free(caminho_tabela_temp);
 
     return linha_apagada;
 }
