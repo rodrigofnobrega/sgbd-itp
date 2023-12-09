@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include "../../includes/utils.h"
+#include "../../includes/utils/file_utils.h"
 
 void mostrar_linhas(int *tam_colunas, int qtd_colunas) {
     printf("+");
@@ -100,25 +101,24 @@ Dados definindo_dados(char *linha, int col_type, Dados col_dados){
 
 void criar_linha() {
     char banco_nome[STRING_MAX_SIZE];
+    FILE *arquivo_ler;
+    FILE *arquivo_escrever;
+
     printf("Digite o nome do arquivo que desejas adicionar as linhas: ");
     fgets(banco_nome, STRING_MAX_SIZE, stdin);
     int string_length = strlen(banco_nome);
     if(banco_nome[string_length-1] == '\n'){
         banco_nome[string_length-1] = '\0';
     }
-    char arquivo_nome[STRING_MAX_SIZE];
-    sprintf(arquivo_nome, "%s%s.txt", DB_PATH, banco_nome);
 
-    FILE *arquivo = fopen(arquivo_nome, "r");
+    arquivo_ler = abrir_arquivo(banco_nome, 'r');
+
     int tam_titulo = strlen("Coluna Nome");
-    if (arquivo == NULL) {
-        perror("Erro ao abrir o arquivo");
-    }
 
     char linha[MAX_TAMANHO_LINHA];
-    if (fgets(linha, MAX_TAMANHO_LINHA, arquivo) == NULL) {
+    if (fgets(linha, MAX_TAMANHO_LINHA, arquivo_ler) == NULL) {
         perror("Erro ao ler a primeira linha");
-        fclose(arquivo);
+        fclose(arquivo_ler);
     }
 
     int pos = 0;
@@ -134,9 +134,9 @@ void criar_linha() {
         col_types = realloc(col_types, sizeof(int) * aux * 2);
     }
 
-    if (fgets(linha, MAX_TAMANHO_LINHA, arquivo) == NULL) {
+    if (fgets(linha, MAX_TAMANHO_LINHA, arquivo_ler) == NULL) {
         perror("Erro ao ler a segunda linha");
-        fclose(arquivo);
+        fclose(arquivo_ler);
     }
 
     pos = 0;
@@ -154,8 +154,8 @@ void criar_linha() {
         col_names[aux-1] = (char *)malloc(sizeof(char) * STRING_MAX_SIZE);
     }
     formatar_tabelas(col_names, col_types, aux-1);
-    fclose(arquivo);
-    FILE *arquivo_escrever = fopen(arquivo_nome, "a");
+    fclose(arquivo_ler);
+    arquivo_escrever = abrir_arquivo(banco_nome, 'a');
 
     int qtd_linhas;
     printf("\nDigite quantas linhas ira adicionar a cada coluna: ");

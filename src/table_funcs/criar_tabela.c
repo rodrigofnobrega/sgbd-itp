@@ -5,6 +5,7 @@
 #include <dirent.h>
 #include "../../includes/utils.h"
 #include "../../includes/utils/string_utils.h"
+#include "../../includes/utils/file_utils.h"
 
 void definir_tipo(int enum_type, Tabela *banco_de_dados, int aux){
     switch(enum_type){
@@ -28,16 +29,11 @@ void definir_tipo(int enum_type, Tabela *banco_de_dados, int aux){
     }
 }
 
-int salvar_arquivo(Tabela *banco_de_dados, int aux) {
-    char database_path[STRING_MAX_SIZE];
-    sprintf(database_path, "%s%s.txt", DB_PATH, banco_de_dados->tabela_nome);
-    
+int salvar_arquivo(Tabela *banco_de_dados, int aux) {   
     FILE *arquivo;
-    arquivo = fopen(database_path, "w");
-    if (arquivo == NULL) {
-        perror("Erro ao abrir o arquivo");
-        return -1; 
-    }
+    arquivo = abrir_arquivo(banco_de_dados->tabela_nome, 'w');
+    if (arquivo == NULL) return -1; 
+    
     for(int i = 0; i < aux; i++){
         fprintf(arquivo, "%d;", banco_de_dados->colunas[i].coluna_tipo);
     }

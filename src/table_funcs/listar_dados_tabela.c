@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../../includes/utils.h"
+#include "../../includes/utils/file_utils.h"
 
 #define MAX_BUFFER_SIZE 100
 #define TITULO "DADOS DA TABELA"
@@ -59,12 +60,8 @@ void mostrar_conteudo_arquivo(char *nomeArquivo) {
     int contador; // Contador pra acessar o tamanho máximo de cada coluna do vetor tam_formatacao_colunas
     int qtd_colunas;
 
-    char caminhoArquivo[MAX_BUFFER_SIZE];
-    snprintf(caminhoArquivo, sizeof(caminhoArquivo), "%s%s", DB_PATH, nomeArquivo);
-
-    arquivo = fopen(caminhoArquivo, "r");
+    arquivo = abrir_arquivo(nomeArquivo, 'r');
     if (arquivo == NULL) {
-        perror("Erro ao abrir o arquivo");
         exit(EXIT_FAILURE);
     }
     
