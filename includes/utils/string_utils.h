@@ -3,7 +3,7 @@
 
 #include <ctype.h>
 
-void upperString(char *string);
+void upper_string(char *string);
 
 void remover_quebra_linha(char *string);
 

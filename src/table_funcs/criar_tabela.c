@@ -122,7 +122,7 @@ void criar_tabela() {
             exit(EXIT_FAILURE);
         }
 
-        upperString(tipo_entrada);
+        upper_string(tipo_entrada);
         str_length = strlen(tipo_entrada);
         
         if (str_length > 0 && tipo_entrada[str_length - 1] == '\n') {
