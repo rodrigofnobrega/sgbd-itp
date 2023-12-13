@@ -60,7 +60,6 @@ int main(){
             default:
                 printf("Erro! Digite uma opção válida.\n");
         }
-        printf("PROCESSO ENCERRADO.\n");
         printf("Pressione qualquer tecla para continuar");
         getchar();
         printf("\e[1;1H\e[2J");

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include "../../includes/utils.h"
+#include "../../includes/utils/string_utils.h"
 #include "../../includes/utils/file_utils.h"
 #define TITULO "DADOS DA TABELA"
 
@@ -68,17 +69,18 @@ int listar_dados(){
     FILE *arquivo;
     char banco_nome[STRING_MAX_SIZE];
 
-    printf("Digite o nome do arquivo: ");
+    printf("Digite o nome do Banco de Dados: ");
     fgets(banco_nome, STRING_MAX_SIZE, stdin);
     int string_lenght = strlen(banco_nome);
     if(banco_nome[string_lenght-1] == '\n'){
         banco_nome[string_lenght-1] == '\0';
     }
+    printf("%s", banco_nome);
 
-    arquivo = abrir_arquivo(banco_nome, "r");
+    arquivo = abrir_arquivo(banco_nome, 'r');
     
     if(arquivo == NULL){
-        perror("Erro ao abrir o arquivo");
+        perror("Erro ao abrir o banco de dados. ");
         return 0;
     }
 

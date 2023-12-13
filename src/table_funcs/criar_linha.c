@@ -159,13 +159,12 @@ void criar_linha() {
         fgets(linha, MAX_TAMANHO_LINHA, stdin);
 
         //Verificando se a chave primária digitada é um inteiro
-        char *linha_token = strtok(linha, " ");
         int id;
-        if(sscanf(linha_token, "%d", &id) == 0){
+        if(sscanf(linha, "%d", &id) == 0){
             printf("O id precisa obrigatoriamente ser inteiro.\n");
             break;
         }
-        else if(id == ultimo_id){
+        else if(id <= ultimo_id){
             printf("O id precisa ser maior que o último da lista: [%d]", ultimo_id);
         }
 
