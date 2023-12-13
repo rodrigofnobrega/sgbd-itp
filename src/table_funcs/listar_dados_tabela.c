@@ -7,7 +7,7 @@
 #include "../../includes/utils/file_utils.h"
 #define TITULO "DADOS DA TABELA"
 
-void mostrar_linhas(int *tam_colunas, int qtd_colunas) {
+void mostrar_linha(int *tam_colunas, int qtd_colunas) {
     printf("+");
     for (int i = 0; i < qtd_colunas; i++) {
         for (int j = 0; j < tam_colunas[i] + 2; j++) {
@@ -24,7 +24,7 @@ int * formatar_tab(char **nomes_colunas, int *tipos_colunas, int qtd_colunas) {
         tam_colunas[i] = strlen(nomes_colunas[i])+9;
     }
 
-    mostrar_linhas(tam_colunas, qtd_colunas);
+    mostrar_linha(tam_colunas, qtd_colunas);
     printf("|");
     for (int i = 0; i < qtd_colunas; i++) {
         switch (tipos_colunas[i]) {
@@ -53,16 +53,17 @@ int * formatar_tab(char **nomes_colunas, int *tipos_colunas, int qtd_colunas) {
         }
     }
     printf("\n");
-    mostrar_linhas(tam_colunas, qtd_colunas);
+    mostrar_linha(tam_colunas, qtd_colunas);
     return tam_colunas;
 }
+
 void formatar_dados(char **tupla, int *tam_colunas, int qtd_colunas){
     printf("|");
     for (int j = 0; j < qtd_colunas; j++) {
         printf(" %-*s |", tam_colunas[j], tupla[j]);
     }
     printf("\n");
-    mostrar_linhas(tam_colunas, qtd_colunas);
+    mostrar_linha(tam_colunas, qtd_colunas);
 }
 
 int listar_dados(){
@@ -73,9 +74,8 @@ int listar_dados(){
     fgets(banco_nome, STRING_MAX_SIZE, stdin);
     int string_lenght = strlen(banco_nome);
     if(banco_nome[string_lenght-1] == '\n'){
-        banco_nome[string_lenght-1] == '\0';
+        banco_nome[string_lenght-1] = '\0';
     }
-    printf("%s", banco_nome);
 
     arquivo = abrir_arquivo(banco_nome, 'r');
     
@@ -110,7 +110,7 @@ int listar_dados(){
     }
 
     int qtd_colunas = aux-1;
-    int *coluna_tam = formatar_tabelas(coluna_nomes, coluna_tipos, qtd_colunas);
+    int *coluna_tam = formatar_tab(coluna_nomes, coluna_tipos, qtd_colunas);
 
     while(fgets(buffer, sizeof(buffer), arquivo) != NULL){
         pos = 0;

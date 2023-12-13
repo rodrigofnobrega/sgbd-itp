@@ -14,10 +14,10 @@ int pesquisar_valor(){
 
     int string_lenght = strlen(banco_nome);
     if(banco_nome[string_lenght-1] == '\n'){
-        banco_nome[string_lenght-1] == '\0';
+        banco_nome[string_lenght-1] = '\0';
     }
 
-    arquivo = abrir_arquivo(banco_nome, "r");
+    arquivo = abrir_arquivo(banco_nome, 'r');
 
     int tipo_coluna;
     int index_coluna;
@@ -75,6 +75,7 @@ int pesquisar_valor(){
                     token = strtok(NULL, ";");
                     aux++;
                 }
+                free(token);
             };
             return 0;
         case FLOAT:
@@ -93,6 +94,7 @@ int pesquisar_valor(){
                     token = strtok(NULL, ";");
                     aux++;
                 }
+                free(token);
             };
             return 0;
         case DOUBLE:
@@ -111,6 +113,7 @@ int pesquisar_valor(){
                     token = strtok(NULL, ";");
                     aux++;
                 }
+                free(token);
             };
             return 0;
         case CHAR:
@@ -129,6 +132,7 @@ int pesquisar_valor(){
                     token = strtok(NULL, ";");
                     aux++;
                 }
+                free(token);
             };
             return 0;
         case STRING:
@@ -147,6 +151,7 @@ int pesquisar_valor(){
                     token = strtok(NULL, ";");
                     aux++;
                 }
+                free(token);
             };
             return 0;
         default:
@@ -154,4 +159,10 @@ int pesquisar_valor(){
             return 0;
     }
     fclose(arquivo);
+    free(arquivo);
+    for(int i = 0; i < sizoef(coluna_nomes); i++){
+        free(coluna_nomes[i]);
+    }
+    free(coluna_nomes);
+    free(coluna_tipos);
 }

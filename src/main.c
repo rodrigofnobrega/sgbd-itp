@@ -31,6 +31,7 @@ int main(){
                 break;
             case 5:
                 pesquisar_valor();
+                getchar();
                 break;
             case 6:
                 printf("Informe o nome da tabela: ");
