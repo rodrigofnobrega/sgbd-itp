@@ -4,8 +4,9 @@
 #include <errno.h>
 #include "../../includes/utils.h"
 #include "../../includes/utils/file_utils.h"
+#define MAX_TAMANHO_LINHA 100
 
-void mostrar_linhas(int *tam_colunas, int qtd_colunas) {
+void mostrar_line(int *tam_colunas, int qtd_colunas) {
     printf("+");
     for (int i = 0; i < qtd_colunas; i++) {
         for (int j = 0; j < tam_colunas[i] + 2; j++) {
@@ -19,64 +20,49 @@ void mostrar_linhas(int *tam_colunas, int qtd_colunas) {
 void formatar_tabelas(char **nomes_colunas, int *tipos_colunas, int qtd_colunas) {
     int tam_colunas[qtd_colunas];
     for (int i = 0; i < qtd_colunas; i++) {
-        tam_colunas[i] = strlen(nomes_colunas[i]);
+        tam_colunas[i] = strlen(nomes_colunas[i])+9;
     }
-    for (int i = 0; i < qtd_colunas; i++) {
-        for (int j = 0; j < 4; j++) {
-            switch (tipos_colunas[i]) {
-                case 0: 
-                case 1: 
-                case 2: 
-                case 3: 
-                    tam_colunas[i] = tam_colunas[i] > 1 ? tam_colunas[i] : 1;
-                    break;
-                case 4: 
-                    tam_colunas[i] = tam_colunas[i] > 4 ? tam_colunas[i] : 4;
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-    mostrar_linhas(tam_colunas, qtd_colunas);
-    printf("|");
 
+    mostrar_line(tam_colunas, qtd_colunas);
+    printf("|");
     for (int i = 0; i < qtd_colunas; i++) {
-        printf(" %-*s |", tam_colunas[i], nomes_colunas[i]);
+        switch (tipos_colunas[i]) {
+            case INT:
+                sprintf(nomes_colunas[i], "%s(INT)", nomes_colunas[i]);
+                printf(" %-*s |", tam_colunas[i], nomes_colunas[i]); 
+                break;
+            case FLOAT:
+                sprintf(nomes_colunas[i], "%s(FLOAT)", nomes_colunas[i]);
+                printf(" %-*s |", tam_colunas[i], nomes_colunas[i]); 
+                break;
+            case DOUBLE:
+                sprintf(nomes_colunas[i], "%s(DOUBLE)", nomes_colunas[i]); 
+                printf(" %-*s |", tam_colunas[i], nomes_colunas[i]);
+                break;
+            case CHAR:
+                sprintf(nomes_colunas[i], "%s(CHAR)", nomes_colunas[i]); 
+                printf(" %-*s |", tam_colunas[i], nomes_colunas[i]);
+                break;
+            case STRING:
+                sprintf(nomes_colunas[i], "%s(STRING)", nomes_colunas[i]); 
+                printf(" %-*s |", tam_colunas[i], nomes_colunas[i]);
+                break;
+            default:
+                break;
+        }
     }
     printf("\n");
 
-    mostrar_linhas(tam_colunas, qtd_colunas);
-
-    for (int i = 0; i < 4; i++) {
-        printf("|");
-        for (int j = 0; j < qtd_colunas; j++) {
-            switch (tipos_colunas[j]) {
-                case 0: 
-                    printf(" %*s |", tam_colunas[j], "");
-                    break;
-                case 1: 
-                    printf(" %*s |", tam_colunas[j], "");
-                    break;
-                case 2: 
-                    printf(" %*s |", tam_colunas[j], "");
-                    break;
-                case 3:
-                    printf(" %*s |", tam_colunas[j], "");
-                    break;
-                case 4: 
-                    printf(" %-*s |", tam_colunas[j], "");
-                    break;
-                default:
-                    printf(" Tipo não reconhecido |");
-                    break;
-            }
-        }
-        printf("\n");
+    mostrar_line(tam_colunas, qtd_colunas);
+    printf("|");
+    for (int j = 0; j < qtd_colunas; j++) {
+        printf(" %-*s |", tam_colunas[j], "...");
     }
+    printf("\n");
 
-    mostrar_linhas(tam_colunas, qtd_colunas);
+    mostrar_line(tam_colunas, qtd_colunas);
 }
+
 Dados definindo_dados(char *linha, int col_type, Dados col_dados){
     switch(col_type){
         case INT:
@@ -138,7 +124,7 @@ void criar_linha() {
         perror("Erro ao ler a segunda linha");
         fclose(arquivo_ler);
     }
-
+    
     pos = 0;
     aux = 1;
     char **col_names = (char **)malloc(sizeof(char *) * aux);
@@ -154,17 +140,35 @@ void criar_linha() {
         col_names[aux-1] = (char *)malloc(sizeof(char) * STRING_MAX_SIZE);
     }
     formatar_tabelas(col_names, col_types, aux-1);
+    
+    //Salvando o último id da tabela para fins de comparação com a entrada do usuário
+    int ultimo_id;
+    while(fscanf(arquivo_ler, "%d", &ultimo_id) == 1){}
+
     fclose(arquivo_ler);
+
     arquivo_escrever = abrir_arquivo(banco_nome, 'a');
 
     int qtd_linhas;
-    printf("\nDigite quantas linhas ira adicionar a cada coluna: ");
+    printf("\nDigite quantas linhas ira adicionar a cada coluna acima: ");
     scanf("%d", &qtd_linhas);
     getchar();
     Dados *col_dados = (Dados *)malloc(sizeof(Dados) * qtd_linhas * aux-1);
     for(int i = 0; i < qtd_linhas; i++){
         printf("Digite a %dª linha: ", i+1);
         fgets(linha, MAX_TAMANHO_LINHA, stdin);
+
+        //Verificando se a chave primária digitada é um inteiro
+        char *linha_token = strtok(linha, " ");
+        int id;
+        if(sscanf(linha_token, "%d", &id) == 0){
+            printf("O id precisa obrigatoriamente ser inteiro.\n");
+            break;
+        }
+        else if(id == ultimo_id){
+            printf("O id precisa ser maior que o último da lista: [%d]", ultimo_id);
+        }
+
         string_length = strlen(linha);
         if(linha[string_length-1] == '\n'){
             linha[string_length-1] = '\0';
@@ -175,10 +179,6 @@ void criar_linha() {
             fprintf(arquivo_escrever, "%s;", token);
             token = strtok(NULL, " "); 
         }
-        /*Dados new_col_dados = definindo_dados(linha, col_types[i], col_dados[i]);
-        printf("[%d] [%s]\n", new_col_dados.inteiro, new_col_dados.string);
-        free(new_col_dados.string);
-        */
     }
     free(col_types);
     free(col_names);

@@ -7,7 +7,7 @@
 #include "../../includes/apagar_linha.h"
 
 int remover_linha(const char *nome_tabela, const char *chave_primaria) {
-    char linha[MAX_TAMANHO_LINHA];
+    char linha[BUFFER_MAX_SIZE];
     int linha_apagada = 0;
     FILE *arquivo_leitura;
     FILE *arquivo_escrita;

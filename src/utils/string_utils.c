@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include "../../includes/utils/string_utils.h"
 
 void upper_string(char *string) {
     while (*string) {

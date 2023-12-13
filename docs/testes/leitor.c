@@ -2,9 +2,17 @@
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
-#include "../../includes/utils.h"
-#include "../../includes/utils/file_utils.h"
+#define STRING_MAX_SIZE 100
+#define MAX_TAMANHO_buffer 100
 #define TITULO "DADOS DA TABELA"
+
+typedef enum tipos {
+    INT,
+    FLOAT,
+    DOUBLE,
+    CHAR,
+    STRING
+} ColunaTipos;
 
 void mostrar_linhas(int *tam_colunas, int qtd_colunas) {
     printf("+");
@@ -17,7 +25,7 @@ void mostrar_linhas(int *tam_colunas, int qtd_colunas) {
     printf("\n");
 }
 
-int * formatar_tab(char **nomes_colunas, int *tipos_colunas, int qtd_colunas) {
+int * formatar_tabelas(char **nomes_colunas, int *tipos_colunas, int qtd_colunas) {
     int *tam_colunas = (int *)malloc(sizeof(int) * qtd_colunas);
     for (int i = 0; i < qtd_colunas; i++) {
         tam_colunas[i] = strlen(nomes_colunas[i])+9;
@@ -64,25 +72,16 @@ void formatar_dados(char **tupla, int *tam_colunas, int qtd_colunas){
     mostrar_linhas(tam_colunas, qtd_colunas);
 }
 
-int listar_dados(){
+int main(){
     FILE *arquivo;
-    char banco_nome[STRING_MAX_SIZE];
-
-    printf("Digite o nome do arquivo: ");
-    fgets(banco_nome, STRING_MAX_SIZE, stdin);
-    int string_lenght = strlen(banco_nome);
-    if(banco_nome[string_lenght-1] == '\n'){
-        banco_nome[string_lenght-1] == '\0';
-    }
-
-    arquivo = abrir_arquivo(banco_nome, "r");
+    arquivo = fopen("../Teste.txt", "r");
     
     if(arquivo == NULL){
         perror("Erro ao abrir o arquivo");
         return 0;
     }
 
-    char buffer[BUFFER_MAX_SIZE];
+    char buffer[100];
     fgets(buffer, sizeof(buffer), arquivo);
 
     int pos = 0;

@@ -2,27 +2,35 @@
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
-#include "../../includes/utils.h"
-#include "../../includes/utils/file_utils.h"
+#define STRING_MAX_SIZE 100
+#define BUFFER_MAX_SIZE 100
+#define TITULO "DADOS DA TABELA"
 
-int pesquisar_valor(){
+typedef enum tipos {
+    INT,
+    FLOAT,
+    DOUBLE,
+    CHAR,
+    STRING
+} ColunaTipos;
+
+typedef union coluna_dados{
+    int inteiro;
+    float flutuante;
+    double real;
+    char caracter;
+    char *string;
+} Dados;
+
+typedef void (*lerFuncao)(void *);
+
+void main(){
     FILE *arquivo;
-    char banco_nome[STRING_MAX_SIZE];
-
-    printf("Digite o nome do arquivo: ");
-    fgets(banco_nome, 100, stdin);
-
-    int string_lenght = strlen(banco_nome);
-    if(banco_nome[string_lenght-1] == '\n'){
-        banco_nome[string_lenght-1] == '\0';
-    }
-
-    arquivo = abrir_arquivo(banco_nome, "r");
+    arquivo = fopen("../Teste.txt", "r");
 
     int tipo_coluna;
     int index_coluna;
     char nome_coluna[STRING_MAX_SIZE];
-
     printf("Digite o nome da coluna: ");
     scanf("%s", nome_coluna);
     getchar();
@@ -72,6 +80,7 @@ int pesquisar_valor(){
                             printf("%d\n", valor.inteiro);
                         }
                     }
+                    //printf("%s", token);
                     token = strtok(NULL, ";");
                     aux++;
                 }
@@ -90,6 +99,7 @@ int pesquisar_valor(){
                             printf("%d\n", valor.inteiro);
                         }
                     }
+                    //printf("%s", token);
                     token = strtok(NULL, ";");
                     aux++;
                 }
@@ -108,6 +118,7 @@ int pesquisar_valor(){
                             printf("%d\n", valor.inteiro);
                         }
                     }
+                    //printf("%s", token);
                     token = strtok(NULL, ";");
                     aux++;
                 }
@@ -126,6 +137,7 @@ int pesquisar_valor(){
                             printf("%d\n", valor.inteiro);
                         }
                     }
+                    //printf("%s", token);
                     token = strtok(NULL, ";");
                     aux++;
                 }

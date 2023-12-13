@@ -1,6 +1,5 @@
 #ifndef FILE_UTILS_H
 #define FILE_UTILS_H
-
 #include <stdio.h>
 #include "../utils.h"
 

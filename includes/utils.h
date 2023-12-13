@@ -1,8 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
-
 #define STRING_MAX_SIZE 100
-#define MAX_TAMANHO_LINHA 100
+#define BUFFER_MAX_SIZE 100
 #define DB_PATH "../database/"
 
 typedef enum tipos {

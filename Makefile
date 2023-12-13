@@ -20,7 +20,7 @@ endif
 
 all: $(TARGET_DIR)/sgbd.$(EXTENSION) clean
 
-$(TARGET_DIR)/sgbd.$(EXTENSION): main.o string_utils.o criar_tabela.o criar_linha.o listar_tabelas.o apagar_tabela.o apagar_linha.o file_utils.o| $(TARGET_DIR)
+$(TARGET_DIR)/sgbd.$(EXTENSION): main.o string_utils.o criar_tabela.o criar_linha.o listar_tabelas.o apagar_tabela.o apagar_linha.o file_utils.o listar_dados_tabela.o pesquisar_valor.o| $(TARGET_DIR)
 	$(CC) $^ -o $@
 
 $(TARGET_DIR):
@@ -45,6 +45,12 @@ apagar_tabela.o: src/table_funcs/apagar_tabela.c
 	$(CC) $< -c -o $@ $(CFLAGS)
 
 apagar_linha.o: src/table_funcs/apagar_linha.c
+	$(CC) $< -c -o $@ $(CFLAGS)
+
+pesquisar_valor.o: src/table_funcs/pesquisar_valor.c
+	$(CC) $< -c -o $@ $(CFLAGS)
+
+listar_dados_tabela.o: src/table_funcs/listar_dados_tabela.c
 	$(CC) $< -c -o $@ $(CFLAGS)
 
 main.o: src/main.c
