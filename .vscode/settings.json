@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "file_utils.h": "c",
+        "string.h": "c",
+        "string_utils.h": "c",
+        "utils.h": "c",
+        "listar_dados_tabela.h": "c"
+    }
+}
