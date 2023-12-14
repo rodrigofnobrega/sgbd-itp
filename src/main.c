@@ -1,3 +1,12 @@
+/*
+===============================================================================
+Arquivo: main.c
+Data: 13 de dezembro de 2023
+Descrição: Função principal que serve como ponto de entrada do programa.
+           Oferece um menu interativo para realizar operações em um banco de dados.
+           O programa continuará a ser executado até que o usuário escolha a opção 0 (Sair).
+===============================================================================
+*/
 #include <stdio.h>
 #include "../includes/criar_tabela.h"
 #include "../includes/criar_linha.h"
@@ -18,7 +27,7 @@ int main(){
         printf("\e[1;1H\e[2J");
         switch(option){
             case 1:
-                criar_tabela();
+                criar_banco_de_dados();
                 break;
             case 2:
                 criar_linha(); 
@@ -31,7 +40,6 @@ int main(){
                 break;
             case 5:
                 pesquisar_valor();
-                getchar();
                 break;
             case 6:
                 printf("Informe o nome da tabela: ");

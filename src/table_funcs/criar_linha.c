@@ -143,7 +143,12 @@ void criar_linha() {
     
     //Salvando o último id da tabela para fins de comparação com a entrada do usuário
     int ultimo_id;
-    while(fscanf(arquivo_ler, "%d", &ultimo_id) == 1){}
+    if(fgets(linha, BUFFER_MAX_SIZE, arquivo_ler) == NULL){
+        ultimo_id = 0;
+    }
+    else{
+        while(fscanf(arquivo_ler, "%d", &ultimo_id) == 1){}
+    }
 
     fclose(arquivo_ler);
 
@@ -156,6 +161,7 @@ void criar_linha() {
     Dados *col_dados = (Dados *)malloc(sizeof(Dados) * qtd_linhas * aux-1);
     for(int i = 0; i < qtd_linhas; i++){
         printf("Digite a %dª linha: ", i+1);
+
         fgets(linha, MAX_TAMANHO_LINHA, stdin);
 
         //Verificando se a chave primária digitada é um inteiro
@@ -165,7 +171,8 @@ void criar_linha() {
             break;
         }
         else if(id <= ultimo_id){
-            printf("O id precisa ser maior que o último da lista: [%d]", ultimo_id);
+            printf("O id precisa ser maior que o último da lista ID:[%d], ou maior que 0: \n", ultimo_id);
+            break;
         }
 
         string_length = strlen(linha);

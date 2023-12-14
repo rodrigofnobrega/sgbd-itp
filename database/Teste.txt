@@ -1,5 +1,5 @@
 0;4;0;
-ID;NOMEW;IDADE;
+ID;NOME;IDADE;
 1;George;50;
 2;Caio;50;
 3;Marcio;50;

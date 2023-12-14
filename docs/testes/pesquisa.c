@@ -152,8 +152,8 @@ void main(){
                     if(aux == index_coluna){
                         char comp[100];
                         sscanf(token, "%s", comp);
-                        if(strcmp(valor.inteiro, comp) == 0){
-                            printf("%s\n", valor.string);
+                        if(strcmp(valor.string, comp) < 0){
+                            printf("%s\n", comp);
                         }
                     }
                     token = strtok(NULL, ";");

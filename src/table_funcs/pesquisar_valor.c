@@ -5,6 +5,15 @@
 #include "../../includes/utils.h"
 #include "../../includes/utils/file_utils.h"
 
+pesquisa_options(){
+    int pesquisa_opt;
+    printf("1. Valores maior que o valor informado\n2. Valores maior ou igual que o valor informado\n3. Valores igual ao valor informado\n4. Valores menor que o valor informado\n5. Valores menor ou igual que o valor informado\n6. Valores próximo ao valor informado (se aplica apenas se a coluna for do tipo string)\n");
+    printf("Digite o tipo de pesquisa: ");
+    scanf("%d", &pesquisa_opt);
+    getchar();
+    return pesquisa_opt;
+}
+
 int pesquisar_valor(){
     FILE *arquivo;
     char banco_nome[STRING_MAX_SIZE];
@@ -57,19 +66,52 @@ int pesquisar_valor(){
     }   
 
     printf("Digite o valor que deseja pesquisar na coluna: ");
+    int pesquisa_opt;
     switch(tipo_coluna){
         Dados valor;
         case INT:
-            scanf("%d", &valor.inteiro);
+            if(scanf("%d", &valor.inteiro) != 1){
+                printf("Valor digitado não corresponde ao tipo da coluna. ");
+                break;
+            };
+            pesquisa_opt = pesquisa_options();
+            printf("Valores encontrados: ");
             while(fgets(buffer, BUFFER_MAX_SIZE, arquivo) != NULL){
-                aux = 0;
+                int aux = 0;
                 char *token = strtok(buffer, ";");
                 while(token != NULL){
                     if(aux == index_coluna){
                         int comp;
                         sscanf(token, "%d", &comp);
-                        if(valor.inteiro == comp){
-                            printf("%d\n", valor.inteiro);
+                        switch(pesquisa_opt){
+                            case 1:
+                                if(valor.inteiro < comp){
+                                    printf("[%d] ",comp);
+                                }
+                                break;
+                            case 2:
+                                if(valor.inteiro <= comp){
+                                    printf("[%d] ", comp);
+                                }
+                                break;
+                            case 3:
+                                if(valor.inteiro == comp){
+                                    printf("[%d] ", comp);
+                                }
+                                break;
+                            case 4:
+                                if(valor.inteiro > comp){
+                                    printf("[%d] ", comp);
+                                }
+                                break;
+                            case 5:
+                                if(valor.inteiro >= comp){
+                                    printf("[%d] ", comp);
+                                }
+                                break;
+                            default:
+                                printf("Opção incorreta. ");
+                                break;
                         }
                     }
                     token = strtok(NULL, ";");
@@ -77,18 +119,50 @@ int pesquisar_valor(){
                 }
                 free(token);
             };
-            return 0;
+            break;
         case FLOAT:
-            scanf("%d", &valor.inteiro);
+            if(scanf("%f", &valor.flutuante) != 1){
+                printf("Valor digitado não corresponde ao tipo da coluna. ");
+                break;
+            };
+            pesquisa_opt = pesquisa_options();
+            printf("Valores encontrados: ");
             while(fgets(buffer, BUFFER_MAX_SIZE, arquivo) != NULL){
-                aux = 0;
+                int aux = 0;
                 char *token = strtok(buffer, ";");
                 while(token != NULL){
                     if(aux == index_coluna){
-                        int comp;
-                        sscanf(token, "%d", &comp);
-                        if(valor.inteiro == comp){
-                            printf("%d\n", valor.inteiro);
+                        float comp;
+                        sscanf(token, "%f", &comp);
+                        switch(pesquisa_opt){
+                            case 1:
+                                if(valor.flutuante < comp){
+                                    printf("[%f] ",comp);
+                                }
+                                break;
+                            case 2:
+                                if(valor.flutuante <= comp){
+                                    printf("[%f] ", comp);
+                                }
+                                break;
+                            case 3:
+                                if(valor.flutuante == comp){
+                                    printf("[%f] ", comp);
+                                }
+                                break;
+                            case 4:
+                                if(valor.flutuante > comp){
+                                    printf("[%f] ", comp);
+                                }
+                                break;
+                            case 5:
+                                if(valor.flutuante >= comp){
+                                    printf("[%f] ", comp);
+                                }
+                                break;
+                            default:
+                                printf("Opção incorreta. ");
+                                break;
                         }
                     }
                     token = strtok(NULL, ";");
@@ -96,18 +170,50 @@ int pesquisar_valor(){
                 }
                 free(token);
             };
-            return 0;
+            break;
         case DOUBLE:
-            scanf("%d", &valor.inteiro);
+            if(scanf("%lf", &valor.real) != 1){
+                printf("Valor digitado não corresponde ao tipo da coluna. ");
+                break;
+            };
+            pesquisa_opt = pesquisa_options();
+            printf("Valores encontrados: ");
             while(fgets(buffer, BUFFER_MAX_SIZE, arquivo) != NULL){
-                aux = 0;
+                int aux = 0;
                 char *token = strtok(buffer, ";");
                 while(token != NULL){
                     if(aux == index_coluna){
-                        int comp;
-                        sscanf(token, "%d", &comp);
-                        if(valor.inteiro == comp){
-                            printf("%d\n", valor.inteiro);
+                        double comp;
+                        sscanf(token, "%lf", &comp);
+                        switch(pesquisa_opt){
+                            case 1:
+                                if(valor.real < comp){
+                                    printf("[%lf] ",comp);
+                                }
+                                break;
+                            case 2:
+                                if(valor.real <= comp){
+                                    printf("[%lf] ", comp);
+                                }
+                                break;
+                            case 3:
+                                if(valor.real == comp){
+                                    printf("[%lf] ", comp);
+                                }
+                                break;
+                            case 4:
+                                if(valor.real > comp){
+                                    printf("[%lf] ", comp);
+                                }
+                                break;
+                            case 5:
+                                if(valor.real >= comp){
+                                    printf("[%lf] ", comp);
+                                }
+                                break;
+                            default:
+                                printf("Opção incorreta. ");
+                                break;
                         }
                     }
                     token = strtok(NULL, ";");
@@ -115,18 +221,50 @@ int pesquisar_valor(){
                 }
                 free(token);
             };
-            return 0;
+            break;
         case CHAR:
-            scanf("%d", &valor.inteiro);
+            if(scanf("%c", &valor.caracter) != 1){
+                printf("Valor digitado não corresponde ao tipo da coluna. ");
+                break;
+            };
+            pesquisa_opt = pesquisa_options();
+            printf("Valores encontrados: ");
             while(fgets(buffer, BUFFER_MAX_SIZE, arquivo) != NULL){
-                aux = 0;
+                int aux = 0;
                 char *token = strtok(buffer, ";");
                 while(token != NULL){
                     if(aux == index_coluna){
-                        int comp;
-                        sscanf(token, "%d", &comp);
-                        if(valor.inteiro == comp){
-                            printf("%d\n", valor.inteiro);
+                        char comp;
+                        sscanf(token, "%c", &comp);
+                        switch(pesquisa_opt){
+                            case 1:
+                                if(valor.caracter < comp){
+                                    printf("[%c] ",comp);
+                                }
+                                break;
+                            case 2:
+                                if(valor.caracter <= comp){
+                                    printf("[%c] ", comp);
+                                }
+                                break;
+                            case 3:
+                                if(valor.caracter == comp){
+                                    printf("[%c] ", comp);
+                                }
+                                break;
+                            case 4:
+                                if(valor.caracter > comp){
+                                    printf("[%c] ", comp);
+                                }
+                                break;
+                            case 5:
+                                if(valor.caracter >= comp){
+                                    printf("[%c] ", comp);
+                                }
+                                break;
+                            default:
+                                printf("Opção incorreta. ");
+                                break;
                         }
                     }
                     token = strtok(NULL, ";");
@@ -134,18 +272,56 @@ int pesquisar_valor(){
                 }
                 free(token);
             };
-            return 0;
+            break;
         case STRING:
-            scanf("%s", valor.string);
+            valor.string = (char *)malloc(sizeof(char) * STRING_MAX_SIZE);
+            if(scanf("%s", valor.string) != 1){
+                printf("Valor digitado não corresponde ao tipo da coluna. ");
+                break;
+            };
+            pesquisa_opt = pesquisa_options();
+            printf("Valores encontrados: ");
             while(fgets(buffer, BUFFER_MAX_SIZE, arquivo) != NULL){
-                aux = 0;
+                int aux = 0;
                 char *token = strtok(buffer, ";");
                 while(token != NULL){
                     if(aux == index_coluna){
-                        char comp[100];
+                        char comp[STRING_MAX_SIZE];
                         sscanf(token, "%s", comp);
-                        if(strcmp(valor.inteiro, comp) == 0){
-                            printf("%s\n", valor.string);
+                        switch(pesquisa_opt){
+                            case 1:
+                                if(strcmp(valor.string, comp) < 0){
+                                    printf("[%s] ", comp);
+                                }
+                                break;
+                            case 2:
+                                if(strcmp(valor.string, comp) < 0 || strcmp(valor.string, comp) == 0){
+                                    printf("[%s] ", comp);
+                                }
+                                break;
+                            case 3:
+                                if(strcmp(valor.string, comp) == 0){
+                                    printf("[%s] ", comp);
+                                }
+                                break;
+                            case 4:
+                                if(strcmp(valor.string, comp) > 0){
+                                    printf("[%s] ", comp);
+                                }
+                                break;
+                            case 5:
+                                if(strcmp(valor.string, comp) > 0 || strcmp(valor.string, comp) == 0){
+                                    printf("[%s] ", comp);
+                                }
+                                break;
+                            case 6:
+                                if((strlen(valor.string) - strlen(comp)) == 1){
+                                    printf("[%s] ", comp);
+                                }
+                                break;
+                            default:
+                                printf("Opção incorreta. ");
+                                break;
                         }
                     }
                     token = strtok(NULL, ";");
@@ -153,14 +329,15 @@ int pesquisar_valor(){
                 }
                 free(token);
             };
-            return 0;
+            break;
         default:
             printf("\nErro de tipo. ");
-            return 0;
+            break;
     }
+    printf("\n");
     fclose(arquivo);
     free(arquivo);
-    for(int i = 0; i < sizoef(coluna_nomes); i++){
+    for(int i = 0; i < sizeof(coluna_nomes); i++){
         free(coluna_nomes[i]);
     }
     free(coluna_nomes);
