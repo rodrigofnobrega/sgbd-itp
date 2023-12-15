@@ -2,9 +2,9 @@
 #include <string.h>
 #include <dirent.h>
 #include <stdlib.h>
+#include "../../includes/utils.h"
 
 #define TITULO "TABELAS EXISTENTES"
-#define DB_FILES_PATH "../database/"
 
 void exibir_linhas(int tamformatacao_tabela) {
     printf("+");
@@ -48,7 +48,7 @@ void mostrar_tabelas() {
     int qtd_tabelas = 0;
     struct dirent *de;
 
-    DIR *dr = opendir(DB_FILES_PATH);
+    DIR *dr = opendir(DB_PATH);
 
     while ((de = readdir(dr)) != NULL) {
         if (strstr(de->d_name, ".txt") != NULL) {
