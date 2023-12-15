@@ -41,7 +41,7 @@ void organizar_tabelas(char **nomes_tabelas, int tam_formatacao_tabela, int qtd_
     exibir_linhas(tam_formatacao_tabela);
 }
 
-int mostrar_tabelas() {
+void mostrar_tabelas() {
     char **nomes_tabelas_existentes = NULL;
     char *nome_tabela;
     int tam_formatacao_tabela = strlen(TITULO);
