@@ -18,7 +18,8 @@ int apagar_tabela(char *nome_tabela) {
     }
 
     char *path_tabela = definir_caminho_tabela(nome_tabela); // Montando o caminho para a tabela
-    strcat(nome_tabela, ".txt");
+    // Concatenando .txt para verificar se o arquivo da tabela existe no diretório
+    strcat(nome_tabela, ".txt"); 
 
     // O loop irá percorrer todos os arquivos do diretório,
     // se a tabela existir será chamado a função remove para excluir o arquivo da tabela
