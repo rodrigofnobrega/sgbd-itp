@@ -1,3 +1,12 @@
+/*
+=========================================================================================================
+Arquivo: listar_tabelas.c
+Data: 15 de dezembro de 2023
+Descrição: Este código tem como finalidade listar e exibir de forma formatada as tabelas existentes no diretório do banco de dados.
+           As tabelas são identificadas pelos arquivos de texto (.txt) presentes no diretório.
+=========================================================================================================
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include <dirent.h>
@@ -7,7 +16,11 @@
 // Define o título que será exibido no topo da tabela
 #define TITULO "TABELAS EXISTENTES"
 
-// Função para exibir linhas horizontais na tabela
+/*--------------------------------------------------------------------------------
+Função: Exibe linhas verticais 
+Parâmetros:
+    - tam_formatacao_tabela: Tamanho máximo de formatação da tabela, servirá para printar a quantidade suficiente de traços.
+*/
 void exibir_linhas(int tam_formatacao_tabela) {
     printf("+");
     // Somando 2 em tam_formatacao_tabela para manter a formatação 
@@ -18,7 +31,13 @@ void exibir_linhas(int tam_formatacao_tabela) {
     printf("+\n");
 }
 
-// Função para organizar e exibir tabelas formatadas
+/*--------------------------------------------------------------------------------
+Função: Organiza e exibe tabelas formatadas.
+Parâmetros:
+    - nomes_tabelas: Vetor contendo os nomes das tabelas a serem exibidas.
+    - tam_formatacao_tabela: Tamanho máximo de formatação da tabela.
+    - qtd_tabelas: Quantidade de tabelas a serem exibidas.
+*/
 void organizar_tabelas(char **nomes_tabelas, int tam_formatacao_tabela, int qtd_tabelas) {
     // Calcula a quantidade de espaços em branco para centralizar o texto
     int espacos_em_branco = (tam_formatacao_tabela - strlen(TITULO));
@@ -47,7 +66,9 @@ void organizar_tabelas(char **nomes_tabelas, int tam_formatacao_tabela, int qtd_
     exibir_linhas(tam_formatacao_tabela);
 }
 
-// Função para listar e formatar as tabelas existentes
+/*--------------------------------------------------------------------------------
+Função: Mostra todas as tabelas
+*/
 void mostrar_tabelas() {
     char **nomes_tabelas_existentes = NULL;
     char *nome_tabela;
