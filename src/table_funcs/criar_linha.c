@@ -1,3 +1,12 @@
+/*
+=========================================================================================================
+Arquivo: criar_linha.c
+Data: 13 de dezembro de 2023
+Descrição: O objetivo desse código é criar e formatar corretamente o banco de dados requerido pelo usuário.
+           Requisita o nome do banco, tipos das colunas e o nome de cada uma, formatando duas linhas no arquivo para tal.
+           A fucionalidade de adicionar dados no banco é realizado pelo código criar_linhas.c
+=========================================================================================================
+*/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
