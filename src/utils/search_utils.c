@@ -1,52 +1,55 @@
 #include <stdio.h>
 #include <string.h>
 #include "../../includes/utils.h"
-#include "../../includes/utils/search_utils.h"
 
-void pesquisa_int(Dados valor, FILE *arquivo, char buffer[], int index_coluna, int pesquisa_opt){
+void leitura_arquivo(FILE *arquivo, char buffer[], int index_coluna){
     while(fgets(buffer, BUFFER_MAX_SIZE, arquivo) != NULL){
-                int aux = 0;
-                char *token = strtok(buffer, ";");
-                while(token != NULL){
-                    if(aux == index_coluna){
-                        int comp;
-                        sscanf(token, "%d", &comp);
-                        switch(pesquisa_opt){
-                            case 1:
-                                if(valor.inteiro < comp){
-                                    printf("[%d] ",comp);
-                                }
-                                break;
-                            case 2:
-                                if(valor.inteiro <= comp){
-                                    printf("[%d] ", comp);
-                                }
-                                break;
-                            case 3:
-                                if(valor.inteiro == comp){
-                                    printf("[%d] ", comp);
-                                }
-                                break;
-                            case 4:
-                                if(valor.inteiro > comp){
-                                    printf("[%d] ", comp);
-                                }
-                                break;
-                            case 5:
-                                if(valor.inteiro >= comp){
-                                    printf("[%d] ", comp);
-                                }
-                                break;
-                            default:
-                                printf("Opção incorreta. ");
-                                break;
-                        }
-                    }
-                    token = strtok(NULL, ";");
-                    aux++;
-                }
-                free(token);
-            };
+        int aux = 0;
+        char *token = strtok(buffer, ";");
+        while(token != NULL){
+            if(aux == index_coluna){
+
+            }
+            token = strtok(NULL, ";");
+            aux++;
+        }
+        free(token);
+    }
+}
+
+void pesquisa_int(Dados valor, char *token, int index_coluna, int pesquisa_opt){
+    int comp;
+    sscanf(token, "%d", &comp);
+    switch(pesquisa_opt){
+        case 1:
+            if(valor.inteiro < comp){
+                printf("[%d] ",comp);
+            }
+           break;
+        case 2:
+           if(valor.inteiro <= comp){
+               printf("[%d] ", comp);
+           }
+           break;
+        case 3:
+            if(valor.inteiro == comp){
+                printf("[%d] ", comp);
+            }
+            break;
+        case 4:
+            if(valor.inteiro > comp){
+                printf("[%d] ", comp);
+            }
+            break;
+        case 5:
+            if(valor.inteiro >= comp){
+                printf("[%d] ", comp);
+            }
+            break;
+        default:
+                printf("Opção incorreta. ");
+            break;
+        }
 }
 void pesquisa_float(Dados valor, FILE *arquivo, char buffer[], int index_coluna, int pesquisa_opt){
     while(fgets(buffer, BUFFER_MAX_SIZE, arquivo) != NULL){
