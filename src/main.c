@@ -15,6 +15,7 @@ Descrição: Função principal que serve como ponto de entrada do programa.
 #include "../includes/listar_tabelas.h"
 #include "../includes/listar_dados_tabela.h"
 #include "../includes/pesquisar_valor.h"
+#include "../includes/utils/string_utils.h"
 
 int main(){
     int option;
@@ -57,9 +58,13 @@ int main(){
                 }
                 break;
             case 7:
-                int apagou_tabela = apagar_tabela();
+                printf("Informe o nome da tabela: ");
+                fgets(nome_tabela, STRING_MAX_SIZE, stdin);
+                remover_quebra_linha(nome_tabela);
+
+                int apagou_tabela = apagar_tabela(nome_tabela);
                 if (apagou_tabela == 1) {
-                    printf("Tabela apagada com sucesso");
+                    printf("Tabela apagada com sucesso\n");
                 } else if (apagou_tabela == 0) {
                     printf("Tabela não encontrada\n");
                 } else if (apagou_tabela == -1) {
