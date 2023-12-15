@@ -136,7 +136,7 @@ int pesquisar_valor(){
     }
     printf("\n");
     fclose(arquivo);
-    free(arquivo);
+
     for(int i = 0; i < sizeof(coluna_nomes); i++){
         free(coluna_nomes[i]);
     }

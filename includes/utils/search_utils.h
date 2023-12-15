@@ -1,5 +1,6 @@
 #ifndef SEARCH_UTILS_H
 #define SEARCH_UTILS_H
+#include <stdio.h>
 #include "../../includes/utils.h"
 
 void pesquisa_int(Dados valor, FILE *arquivo, char buffer[], int index_coluna, int pesquisa_opt);

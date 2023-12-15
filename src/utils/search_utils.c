@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "../../includes/utils.h"
+#include "../../includes/utils/search_utils.h"
 
 void pesquisa_int(Dados valor, FILE *arquivo, char buffer[], int index_coluna, int pesquisa_opt){
     while(fgets(buffer, BUFFER_MAX_SIZE, arquivo) != NULL){
