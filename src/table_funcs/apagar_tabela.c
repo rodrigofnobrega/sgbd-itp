@@ -1,3 +1,12 @@
+/*
+=========================================================================================================
+Arquivo: apagar_tabela.c
+Data: 15 de dezembro de 2023
+Descrição: O objetivo deste código é excluir uma tabela previamente criada pelo usuário.
+           Requer apenas o nome da tabela a ser excluída.
+=========================================================================================================
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,10 +15,17 @@
 #include "../../includes/utils/file_utils.h"
 #include "../../includes/utils.h"
 
+/*--------------------------------------------------------------------------------
+Função: apaga os dados de uma tabela existente no diretório do banco de dados.
+Parâmetros:
+    - Nome da tabela a ser excluída.
+Retorno:
+    - Retorna 1 se a tabela foi excluída com sucesso, 0 se a tabela não existe, -1 em caso de erro.
+*/
 int apagar_tabela(char *nome_tabela) {
     DIR *dir;
     struct dirent *entrada;
-    int tabela_existe = 0; // "Bool" que indica se uma tabala existe
+    int tabela_existe = 0; // Indicador booleano para verificar se uma tabela existe
 
     dir = opendir(DB_PATH);
     if (dir == NULL) {
@@ -18,11 +34,11 @@ int apagar_tabela(char *nome_tabela) {
     }
 
     char *path_tabela = definir_caminho_tabela(nome_tabela); // Montando o caminho para a tabela
-    // Concatenando .txt para verificar se o arquivo da tabela existe no diretório
+    // Adicionando a extensão .txt para verificar se o arquivo da tabela existe no diretório
     strcat(nome_tabela, ".txt"); 
 
-    // O loop irá percorrer todos os arquivos do diretório,
-    // se a tabela existir será chamado a função remove para excluir o arquivo da tabela
+    // O loop percorre todos os arquivos do diretório,
+    // se a tabela existir, a função remove é chamada para excluir o arquivo da tabela
     while ((entrada = readdir(dir)) != NULL) {
         if (strcmp(entrada->d_name, nome_tabela) == 0) {
             if (remove(path_tabela) == 0) {
