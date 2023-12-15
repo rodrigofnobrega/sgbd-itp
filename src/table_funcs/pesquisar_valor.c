@@ -21,7 +21,7 @@ int pesquisar_valor(){
     FILE *arquivo;
     char banco_nome[STRING_MAX_SIZE];
 
-    printf("Digite o nome do arquivo: ");
+    printf("Digite o nome da tabela: ");
     fgets(banco_nome, 100, stdin);
 
     int string_lenght = strlen(banco_nome);
