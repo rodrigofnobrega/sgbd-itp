@@ -1,7 +1,7 @@
 /*
 =========================================================================================================
 Arquivo: listar_tabelas.c
-Data: 15 de dezembro de 2023
+Data modificação: 15 de dezembro de 2023
 Descrição: Este código tem como finalidade listar e exibir de forma formatada as tabelas existentes no diretório do banco de dados.
            As tabelas são identificadas pelos arquivos de texto (.txt) presentes no diretório.
 =========================================================================================================

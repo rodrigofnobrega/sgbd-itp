@@ -1,7 +1,7 @@
 /*
 =========================================================================================================
 Arquivo: apagar_tabela.c
-Data: 15 de dezembro de 2023
+Data modificação: 15 de dezembro de 2023
 Descrição: O objetivo deste código é excluir uma tabela previamente criada pelo usuário.
            Requer apenas o nome da tabela a ser excluída.
 =========================================================================================================

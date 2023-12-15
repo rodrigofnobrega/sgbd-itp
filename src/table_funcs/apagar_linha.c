@@ -1,7 +1,7 @@
 /*
 ====================================================================================================================
 Arquivo: apagar_linha.c
-Data: 15 de dezembro de 2023
+Data modificação: 15 de dezembro de 2023
 Descrição: O objetivo deste código é excluir uma linha específica de uma tabela previamente criada pelo usuário,
            com base na chave primária. 
            Requer o nome da tabela e a chave primária da linha a ser excluída.

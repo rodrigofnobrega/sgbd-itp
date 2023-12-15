@@ -1,7 +1,7 @@
 /*
 ===============================================================================
 Arquivo: main.c
-Data: 13 de dezembro de 2023
+Data modificação: 15 de dezembro de 2023
 Descrição: Função principal que serve como ponto de entrada do programa.
            Oferece um menu interativo para realizar operações em um banco de dados.
            O programa continuará a ser executado até que o usuário escolha a opção 0 (Sair).
