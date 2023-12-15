@@ -42,7 +42,7 @@ void organizar_tabelas(char **nomes_tabelas, int tam_formatacao_tabela, int qtd_
 }
 
 int mostrar_tabelas() {
-    char **qtd_tabelas_existentes = NULL;
+    char **nomes_tabelas_existentes = NULL;
     char *nome_tabela;
     int tam_formatacao_tabela = strlen(TITULO);
     int qtd_tabelas = 0;
@@ -59,22 +59,24 @@ int mostrar_tabelas() {
             }
 
             // Realoca o vetor de ponteiros para acomodar mais uma string
-            qtd_tabelas_existentes = (char **)realloc(qtd_tabelas_existentes, (qtd_tabelas + 1) * sizeof(char *));
+            nomes_tabelas_existentes = (char **)realloc(nomes_tabelas_existentes, (qtd_tabelas + 1) * sizeof(char *));
 
             // Aloca memória para a string atual
-            qtd_tabelas_existentes[qtd_tabelas] = (char *)malloc((strlen(nome_tabela) + 1) * sizeof(char));
+            nomes_tabelas_existentes[qtd_tabelas] = (char *)malloc((strlen(nome_tabela) + 1) * sizeof(char));
 
-            strcpy(qtd_tabelas_existentes[qtd_tabelas], nome_tabela);
+            strcpy(nomes_tabelas_existentes[qtd_tabelas], nome_tabela);
 
             qtd_tabelas++;
         }
     }
 
-    organizar_tabelas(qtd_tabelas_existentes, tam_formatacao_tabela, qtd_tabelas);
+    closedir(dr);
+
+    organizar_tabelas(nomes_tabelas_existentes, tam_formatacao_tabela, qtd_tabelas);
 
     for (int i = 0; i < qtd_tabelas; i++) {
-        free(qtd_tabelas_existentes[i]);
+        free(nomes_tabelas_existentes[i]);
     }
 
-    free(qtd_tabelas_existentes);
+    free(nomes_tabelas_existentes);
 }
