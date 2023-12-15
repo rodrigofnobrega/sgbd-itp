@@ -20,11 +20,14 @@ endif
 
 all: $(TARGET_DIR)/sgbd.$(EXTENSION) clean
 
-$(TARGET_DIR)/sgbd.$(EXTENSION): main.o string_utils.o criar_tabela.o criar_linha.o listar_tabelas.o apagar_tabela.o apagar_linha.o file_utils.o listar_dados_tabela.o pesquisar_valor.o| $(TARGET_DIR)
+$(TARGET_DIR)/sgbd.$(EXTENSION): main.o search_utils.o string_utils.o criar_tabela.o criar_linha.o listar_tabelas.o apagar_tabela.o apagar_linha.o file_utils.o listar_dados_tabela.o pesquisar_valor.o| $(TARGET_DIR)
 	$(CC) $^ -o $@
 
 $(TARGET_DIR):
 	mkdir -p $(TARGET_DIR)
+
+search_utils.o: src/utils/search_utils.c 
+	$(CC) $< -c -o $@ $(CFLAGS)
 
 string_utils.o: src/utils/string_utils.c 
 	$(CC) $< -c -o $@ $(CFLAGS)
