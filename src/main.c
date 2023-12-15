@@ -57,10 +57,13 @@ int main(){
                 }
                 break;
             case 7:
-                if (apagar_tabela() == 0) {
+                int apagou_tabela = apagar_tabela();
+                if (apagou_tabela == 1) {
+                    printf("Tabela apagada com sucesso");
+                } else if (apagou_tabela == 0) {
                     printf("Tabela não encontrada\n");
-                } else if (apagar_tabela() == -1) {
-                    printf("Erro ao apagar tabela\n");
+                } else if (apagou_tabela == -1) {
+                    printf("Erro ao encontrar diretório da tabela\n");
                 }
                 break;
             case 0:
