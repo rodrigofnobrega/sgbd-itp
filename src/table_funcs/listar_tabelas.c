@@ -8,11 +8,11 @@
 #define TITULO "TABELAS EXISTENTES"
 
 // Função para exibir linhas horizontais na tabela
-void exibir_linhas(int tamformatacao_tabela) {
+void exibir_linhas(int tam_formatacao_tabela) {
     printf("+");
     // Somando 2 em tam_formatacao_tabela para manter a formatação 
     // ao printar o + ao início e fim da linha
-    for (int i = 0; i < tamformatacao_tabela + 2; i++) {
+    for (int i = 0; i < tam_formatacao_tabela + 2; i++) {
         printf("-");
     }
     printf("+\n");
